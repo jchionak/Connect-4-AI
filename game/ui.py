@@ -101,7 +101,7 @@ def title_screen():
     pygame.display.quit()
 
 
-def multiplayer_game(background: pygame.Surface):
+def multiplayer_game():
     """
     Runs a game between two human players.
     """
