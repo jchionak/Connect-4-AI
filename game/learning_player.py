@@ -161,13 +161,16 @@ class LearningPlayer(Player):
         if self.past_games is not None and not self.past_games.is_leaf():
             explore = random.uniform(0.0, 1.0)
             if explore <= self.exploration_probability:
-                max_win_prob_so_far = 0.0
+                max_win_prob_so_far = -1.0
                 best_subtree = available_columns[0]
                 for subtree in self.past_games.subtrees.values():
                     if max_win_prob_so_far < subtree.win_probability and subtree.root in available_columns:
                         max_win_prob_so_far = subtree.win_probability
                         best_subtree = subtree.root
-                return best_subtree
+                if max_win_prob_so_far > 0.0:  # only follow the tree if there is a move that is winning
+                    return best_subtree
+                else:
+                    return random.choice(available_columns)
             else:
                 next_move = random.choice(available_columns)
                 if next_move not in self.past_games.subtrees:
@@ -223,9 +226,9 @@ def run_learning_algorithm(exploration_probabilities: list[float], past_games: O
         if winner == 'red':
             game_tree_so_far.insert_move_sequence(move_sequence, 1.0)
         elif winner == 'yellow':
-            game_tree_so_far.insert_move_sequence(move_sequence, 0.0)
+            game_tree_so_far.insert_move_sequence(move_sequence, -1.0)
         else:
-            game_tree_so_far.insert_move_sequence(move_sequence, 0.5)
+            game_tree_so_far.insert_move_sequence(move_sequence, 0.0)
 
     # for stat in stats:
     #     print(f'{stat}: {stats[stat]}')
