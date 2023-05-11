@@ -56,22 +56,11 @@ def run_interactive_game():
     Runs a single game where the player plays against the AI.
     """
     # first, train the AI for a while
-    probabilities = []
-    probabilities.extend([0.0] * 20000)
-    game_tree = run_learning_algorithm(probabilities)
-    game_tree = game_tree[0]
 
-    probabilities = []
-    probabilities.extend([0.5] * 30000)
-    game_tree = run_learning_algorithm(probabilities, game_tree)
-    game_tree = game_tree[0]
+    red_player = LearningPlayer('red', MoveTree('*'), 1.0)
 
-    probabilities = []
-    probabilities.extend([1.0] * 50000)
-    game_tree = run_learning_algorithm(probabilities, game_tree)
-    game_tree = game_tree[0]
+    red_player.insert_games_from_csv('data/50k_games_learning.csv')
 
-    red_player = LearningPlayer('red', game_tree, 1.0)
     yellow_player = HumanPlayer('yellow')
 
     pygame.display.init()

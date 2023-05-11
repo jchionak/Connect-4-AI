@@ -191,26 +191,18 @@ def ai_game():
     screen.blit(load_message, (100, 0))
     pygame.display.update()
 
-    probabilities = []
-    probabilities.extend([0.0] * 20000)
-    game_tree = run_learning_algorithm(probabilities)
-    game_tree = game_tree[0]
+    red_player = LearningPlayer('red', MoveTree('*'), 1.0)
 
-    probabilities = []
-    probabilities.extend([0.5] * 30000)
-    game_tree = run_learning_algorithm(probabilities, game_tree)
-    game_tree = game_tree[0]
+    red_player.insert_games_from_csv('data/100k_games_learning.csv')
 
-    probabilities = []
-    probabilities.extend([1.0] * 50000)
-    game_tree = run_learning_algorithm(probabilities, game_tree)
-    game_tree = game_tree[0]
+    game_tree = red_player.past_games
 
     while True:
 
         pygame.display.quit()
 
-        red_player = LearningPlayer('red', game_tree, 0.95)
+        red_player = LearningPlayer('red', game_tree, 1.0)
+
         yellow_player = HumanPlayer('yellow')
 
         pygame.init()

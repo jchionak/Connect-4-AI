@@ -267,3 +267,37 @@ def learning_algorithm_example():
     print('\nWin Percentages\n')
     print(f"Old: {(stats['red'] / 20000) * 100}\n")
     print(f"New: {(new_stats['red'] / 20000) * 100}")
+
+
+def run_learning_algorithm_for_data(probabilities: list[float], filename: str):
+    """
+    Runs the learning algorithm and writes the data to a csv file.
+    """
+    game_tree = MoveTree(GAME_START_MOVE)
+    with open(filename, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+
+        num_wins_by_colour = {'red': 0, 'yellow': 0, 'draw': 0}
+
+        for probability in probabilities:
+            red_player = LearningPlayer('red', game_tree, probability)
+            yellow_player = RandomPlayer()
+            game = GameManager(red_player, yellow_player)
+            game.run_game()
+            if game.winner == 'red':
+                num_wins_by_colour['red'] += 1
+                game_tree.insert_move_sequence(game.move_sequence, 1.0)
+            elif game.winner == 'yellow':
+                num_wins_by_colour['yellow'] += 1
+                game_tree.insert_move_sequence(game.move_sequence, -1.0)
+            else:
+                num_wins_by_colour['draw'] += 1
+                game_tree.insert_move_sequence(game.move_sequence, 0.0)
+
+            writer.writerow(game.move_sequence)
+            if game.winner is not None:
+                writer.writerow([game.winner])
+            else:
+                writer.writerow(['draw'])
+
+        return num_wins_by_colour
