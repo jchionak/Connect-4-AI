@@ -4,8 +4,6 @@ Implements a player that 'learns' from past games to improve their performance.
 from __future__ import annotations
 from manager import *
 import random
-import matplotlib.pyplot as plt
-import numpy as np
 
 GAME_START_MOVE = '*'
 
