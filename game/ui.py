@@ -186,9 +186,10 @@ def ai_game():
 
     screen = pygame.display.set_mode((950, 800))
     screen.fill((255, 228, 225))
-    font = pygame.font.SysFont('bahnschrift', 100)
+    font = pygame.font.SysFont('bahnschrift', 75)
     load_message = font.render(f'AI Currently Learning...', True, (0, 0, 0))
     screen.blit(load_message, (100, 0))
+    pygame.display.update()
 
     probabilities = []
     probabilities.extend([0.0] * 20000)
