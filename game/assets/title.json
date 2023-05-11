@@ -1,0 +1,29 @@
+{
+  "@menu_text":
+  {
+    "colours":
+    {
+      "normal_text": "rgb(112,128,144)",
+      "text_shadow": "rgb(255, 255, 255)"
+    },
+    "font":
+    {
+      "size": "100"
+    },
+    "misc":
+    {
+      "text_shadow_size": "2"
+    }
+  },
+  "#name_text":
+  {
+    "font":
+    {
+      "size": "25"
+    },
+    "misc":
+    {
+      "text_shadow_size": "0"
+    }
+  }
+}
